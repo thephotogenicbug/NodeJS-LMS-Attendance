@@ -32,46 +32,47 @@ app.post("/login", function(req,res){
     })
 });
 
-app.post("/loginattendance", function(req,res){
-    var empid = req.body.empid;
-    var name  = req.body.ename;
-    var mobile = req.body.emobile;
-    var email  = req.body.cemail;
-    var cardid = req.body.ecardid;
-    var login =  req.body.elogin;
-    var time =  req.body.etime;
-    var sql="insert into attendance(employee, name, mobile, email, cardid, logindate, logintime) values('"+empid+"', '"+name+"', '"+mobile+"', '"+email+"', '"+cardid+"', '"+login+"', '"+time+"')";
+
+
+app.post("/attendance", function(req , res){
+    var empid   = req.body.empid;
+    var name     = req.body.ename;
+    var contact  = req.body.econtact;
+    var cardid   = req.body.ecardid;
+    var date     = req.body.edate;
+    var time     = req.body.etime;
+    var sql = "insert into attendance(employee, name, contact, cardid, logindate, logintime) values('"+empid+"', '"+name+"', '"+contact+"', '"+cardid+"', '"+date+"', '"+time+"')";
     mydatabase.query(sql, function(error, rows, fields){
         if(error) throw error
-        res.send("Attendance Submitted.. !");
-        res.end();
+        res.send("Attendance Submitted Successfully...!")
+        res.end()
     })
-});
 
-// app.post("/getemployeeinfo", function(req,res){
-//     var empid = req.body.empid;
-//      var sql = "select * from attendance where employee='"+empid+"'";
-//    mydatabase.query(sql, function(error, rows, fields){
-//        var empid = req.body.empid;
-//        var sql2 ="select * from logoutattendance where employee='"+empid+"'";
-//        mydatabase.query(sql2)
-//        if(error) throw error
-//        res.send(rows);
-//        res.end()
-//    })
-// })
+})
 
-app.post("/logoutattendance", function(req,res){
+app.post("/logoutattendance", function(req, res){
     var empid = req.body.empid;
-    var time =  req.body.etime;
-    var sql="insert into logoutattendance(employee, logout) values('"+empid+"', '"+time+"')";
+    var time = req.body.etime;
+    var sql = "update attendance set logout='"+time+"' where employee='"+empid+"' ";
     mydatabase.query(sql, function(error, rows, fields){
         if(error) throw error
-        res.send("Logout Submitted.. !");
+        res.send("Logout Submitted successfully... !")
         res.end();
     })
-});
 
+})
+
+app.post("/lunchbreakin", function(req, res){
+    var empid = req.body.empid;
+    var time = req.body.etime;
+    var sql = "update attendance set lunchbreakin='"+time+"' where employee='"+empid+"' ";
+    mydatabase.query(sql, function(error, rows, fields){
+        if(error) throw error
+        res.send("Lunch Break in Submitted successfully... !")
+        res.end();
+    })
+
+})
 
 
 app.post("/employeeinfo", function(req,res){
