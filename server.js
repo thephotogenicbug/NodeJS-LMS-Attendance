@@ -35,13 +35,14 @@ app.post("/login", function(req,res){
 
 
 app.post("/attendance", function(req , res){
-    var empid   = req.body.empid;
-    var name     = req.body.ename;
-    var contact  = req.body.econtact;
-    var cardid   = req.body.ecardid;
-    var date     = req.body.edate;
-    var time     = req.body.etime;
-    var sql = "insert into attendance(employee, name, contact, cardid, logindate, logintime) values('"+empid+"', '"+name+"', '"+contact+"', '"+cardid+"', '"+date+"', '"+time+"')";
+    var empid           = req.body.empid;
+    var name            = req.body.ename;
+    var contact         = req.body.econtact;
+    var cardid          = req.body.ecardid;
+    var date            = req.body.edate;
+    var time            = req.body.etime;
+    var logouttime      = req.body.elogout;
+    var sql = "insert into attendance(employee, name, contact, cardid, logindate, logintime, logout) values('"+empid+"', '"+name+"', '"+contact+"', '"+cardid+"', '"+date+"', '"+time+"', '"+logouttime+"')";
     mydatabase.query(sql, function(error, rows, fields){
         if(error) throw error
         res.send("Attendance Submitted Successfully...!")
@@ -50,22 +51,28 @@ app.post("/attendance", function(req , res){
 
 })
 
-app.post("/logoutattendance", function(req, res){
-    var empid = req.body.empid;
-    var time = req.body.etime;
-    var sql = "update attendance set logout='"+time+"' where employee='"+empid+"' ";
-    mydatabase.query(sql, function(error, rows, fields){
-        if(error) throw error
-        res.send("Logout Submitted successfully... !")
-        res.end();
-    })
+// app.post("/logoutattendance", function(req, res){
+//     var empid = req.body.empid;
+//     var time = req.body.etime;
+//     var sql = "update attendance set logout='"+time+"' where employee='"+empid+"' ";
+//     mydatabase.query(sql, function(error, rows, fields){
+//         if(error) throw error
+//         res.send("Logout Submitted successfully... !")
+//         res.end();
+//     })
 
-})
+// })
 
 app.post("/lunchbreakin", function(req, res){
-    var empid = req.body.empid;
-    var time = req.body.etime;
-    var sql = "update attendance set lunchbreakin='"+time+"' where employee='"+empid+"' ";
+    var empid           = req.body.empid;
+    var name            = req.body.ename;
+    var contact         = req.body.econtact;
+    var cardid          = req.body.ecardid;
+    var date            = req.body.edate;
+    var time            = req.body.etime;
+    var time            = req.body.etime;
+    var lunchbreakout = req.body.elunchbreakout;
+    var sql = "insert into lunchbreak(employee, name, contact, cardid, lunchdate, lunchbreakin, lunchbreakout) values('"+empid+"', '"+name+"', '"+contact+"', '"+cardid+"', '"+date+"', '"+time+"', '"+lunchbreakout+"')";
     mydatabase.query(sql, function(error, rows, fields){
         if(error) throw error
         res.send("Lunch Break in Submitted successfully... !")
@@ -73,6 +80,17 @@ app.post("/lunchbreakin", function(req, res){
     })
 
 })
+// app.post("/lunchbreakout", function(req, res){
+//     var empid = req.body.empid;
+//     var time = req.body.etime;
+//     var sql = "update attendance set lunchbreakout='"+time+"' where employee='"+empid+"' ";
+//     mydatabase.query(sql, function(error, rows, fields){
+//         if(error) throw error
+//         res.send("Lunch Break in Submitted successfully... !")
+//         res.end();
+//     })
+
+// })
 
 
 app.post("/employeeinfo", function(req,res){
@@ -107,6 +125,15 @@ app.post("/fetchemployeeinfo", function(req,res){
     })
 })
 
+// app.get("/getinfo", function(req,res){
+//     var sql = "select * from employeeinfo order by id desc";
+//     mydatabase.query(sql, function(error, rows,fields){
+//         if(error) throw error
+//         res.send(rows);
+//         res.end();
+//     })
+// })
+
 app.post("/applyforleave", function(req, res){
     var empid  = req.body.empid;
     var name   = req.body.ename;
@@ -123,6 +150,6 @@ app.post("/applyforleave", function(req, res){
     })
 })
 
-app.listen(2222, function(){
-    console.log("Server is Running on port 2222")
+app.listen(5005, function(){
+    console.log("Server is Running on port 5005")
 })
